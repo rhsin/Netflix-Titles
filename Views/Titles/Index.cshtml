@@ -12,21 +12,21 @@
 
 <form asp-controller="Titles" asp-action="Index" method="get">
     <p>
-        <select asp-for="TitleGenre" asp-items="Model.Genres">
-            <option value="">All</option>
-        </select>
-
         <select asp-for="TitleType" asp-items="Model.Types">
             <option value="">All</option>
         </select>
 
+        <select asp-for="TitleGenre" asp-items="Model.Genres">
+            <option value="">All</option>
+        </select>
+
         Name: <input type="text" name="SearchString">
-        <input type="submit" value="Filter" />
 
         Cast: <input type="text" name="CastString">
         <input type="submit" value="Filter" />
     </p>
 </form>
+
 <table class="table">
     <thead>
         <tr>

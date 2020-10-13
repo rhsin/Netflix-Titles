@@ -35,17 +35,7 @@ namespace MvcTitle.Controllers
 
             var titleFilter = new TitleFilter(allTitles);
 
-            var titles = titleFilter.Filter(searchString, castString);
-
-            if (!String.IsNullOrEmpty(titleGenre))
-            {
-                titles = titles.Where(t => t.Genre == titleGenre);
-            }
-
-            if (!String.IsNullOrEmpty(titleType))
-            {
-                titles = titles.Where(t => t.Type == titleType);
-            }
+            var titles = titleFilter.FilterBy(titleType, titleGenre, searchString, castString);
 
             var titleVM = new TitleViewModel
             {

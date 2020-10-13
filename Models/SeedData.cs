@@ -17,9 +17,15 @@ namespace MvcTitle.Models
                 // Look for any titles.
                 if (context.Title.Any())
                 {
-                    context.Title.RemoveRange(context.Title);   // Remove titles if DB has been seeded
-                    context.SaveChanges();
+                    return;   // DB has been seeded
                 }
+
+                //// Look for any titles.
+                //if (context.Title.Any())
+                //{
+                //    context.Title.RemoveRange(context.Title);   // Remove titles if DB has been seeded
+                //    context.SaveChanges();
+                //}
 
                 context.Title.AddRange(
                     new Title
