@@ -10,6 +10,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MvcTitle.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
+using MvcTitle.Services;
 
 namespace MvcTitle
 {
@@ -29,6 +31,8 @@ namespace MvcTitle
 
             services.AddDbContext<MvcTitleContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("MvcTitleContext")));
+
+            services.AddSingleton<IFilterService, TitleFilter>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,6 +60,11 @@ namespace MvcTitle
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapGet("/test", async context =>
+                {
+                    await context.Response.WriteAsync("Testing GET endpoint");
+                });
             });
         }
     }

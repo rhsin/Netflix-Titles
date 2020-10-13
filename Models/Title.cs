@@ -8,16 +8,13 @@ namespace MvcTitle.Models
     {
         public int Id { get; set; }
 
-        [StringLength(60, MinimumLength = 3)]
-        [Required]
+        [Required, StringLength(60, MinimumLength = 3)]
         public string Name { get; set; }
 
-        [StringLength(30)]
-        [Required]
+        [Required, StringLength(30)]
         public string Type { get; set; }
 
-        [Display(Name = "Release Date")]
-        [DataType(DataType.Date)]
+        [Display(Name = "Release Date"), DataType(DataType.Date)]
         public DateTime ReleaseDate { get; set; }
 
         [StringLength(50)]

@@ -15,9 +15,12 @@ namespace MvcTitle.Controllers
     {
         private readonly MvcTitleContext _context;
 
-        public TitlesController(MvcTitleContext context)
+        private IFilterService _filterService;
+
+        public TitlesController(MvcTitleContext context, IFilterService filterService)
         {
             _context = context;
+            _filterService = filterService;
         }
 
         // GET: Titles
@@ -33,9 +36,7 @@ namespace MvcTitle.Controllers
             var allTitles = from t in _context.Title
                          select t;
 
-            var titleFilter = new TitleFilter(allTitles);
-
-            var titles = titleFilter.FilterBy(titleType, titleGenre, searchString, castString);
+            var titles = _filterService.FilterBy(allTitles, titleType, titleGenre, searchString, castString);
 
             var titleVM = new TitleViewModel
             {
