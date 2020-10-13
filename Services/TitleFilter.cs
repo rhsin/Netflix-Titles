@@ -1,15 +1,12 @@
 ﻿using MvcTitle.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace MvcTitle.Services
 {
     public class TitleFilter : IFilterService
     {
-        public IQueryable<Title> FilterBy(IQueryable<Title> titles, string titleType,
-            string titleGenre, string searchString, string castString)
+        public IQueryable<Title> FilterByOption(IQueryable<Title> titles, string titleType, string titleGenre)
         {
             if (!String.IsNullOrEmpty(titleType))
             {
@@ -21,6 +18,11 @@ namespace MvcTitle.Services
                 titles = titles.Where(t => t.Genre == titleGenre);
             }
 
+            return titles;
+        }
+
+        public IQueryable<Title> FilterByText(IQueryable<Title> titles, string searchString, string castString)
+        {
             if (!String.IsNullOrEmpty(searchString))
             {
                 titles = titles.Where(t => t.Name.Contains(searchString));

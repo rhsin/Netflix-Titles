@@ -166,8 +166,6 @@ C:\Users\Ryan\source\repos\MvcTitle\bin\Debug\netcoreapp3.1\ru\Microsoft.CodeAna
 C:\Users\Ryan\source\repos\MvcTitle\bin\Debug\netcoreapp3.1\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Users\Ryan\source\repos\MvcTitle\bin\Debug\netcoreapp3.1\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Users\Ryan\source\repos\MvcTitle\bin\Debug\netcoreapp3.1\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
-C:\Users\Ryan\source\repos\MvcTitle\obj\Debug\netcoreapp3.1\MvcTitle.csproj.CoreCompileInputs.cache
-C:\Users\Ryan\source\repos\MvcTitle\obj\Debug\netcoreapp3.1\MvcTitle.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\Ryan\source\repos\MvcTitle\bin\Debug\netcoreapp3.1\Properties\serviceDependencies.json
 C:\Users\Ryan\source\repos\MvcTitle\bin\Debug\netcoreapp3.1\Properties\serviceDependencies.local.json
 C:\Users\Ryan\source\repos\MvcTitle\obj\Debug\netcoreapp3.1\Razor\Views\Titles\Create.cshtml.g.cs
@@ -175,3 +173,6 @@ C:\Users\Ryan\source\repos\MvcTitle\obj\Debug\netcoreapp3.1\Razor\Views\Titles\D
 C:\Users\Ryan\source\repos\MvcTitle\obj\Debug\netcoreapp3.1\Razor\Views\Titles\Details.cshtml.g.cs
 C:\Users\Ryan\source\repos\MvcTitle\obj\Debug\netcoreapp3.1\Razor\Views\Titles\Edit.cshtml.g.cs
 C:\Users\Ryan\source\repos\MvcTitle\obj\Debug\netcoreapp3.1\Razor\Views\Titles\Index.cshtml.g.cs
+C:\Users\Ryan\source\repos\MvcTitle\bin\Debug\netcoreapp3.1\CsvHelper.dll
+C:\Users\Ryan\source\repos\MvcTitle\obj\Debug\netcoreapp3.1\MvcTitle.csproj.CoreCompileInputs.cache
+C:\Users\Ryan\source\repos\MvcTitle\obj\Debug\netcoreapp3.1\MvcTitle.MvcApplicationPartsAssemblyInfo.cache

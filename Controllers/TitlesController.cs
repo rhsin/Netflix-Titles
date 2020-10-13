@@ -36,13 +36,15 @@ namespace MvcTitle.Controllers
             var allTitles = from t in _context.Title
                          select t;
 
-            var titles = _filterService.FilterBy(allTitles, titleType, titleGenre, searchString, castString);
+            IQueryable<Title> filteredTitles = _filterService.FilterByOption(allTitles, titleType, titleGenre);
+
+            IQueryable<Title> titles = _filterService.FilterByText(filteredTitles, searchString, castString);
 
             var titleVM = new TitleViewModel
             {
                 Types = new SelectList(await typeQuery.Distinct().ToListAsync()),
                 Genres = new SelectList(await genreQuery.Distinct().ToListAsync()),
-                Titles = await titles.ToListAsync()
+                Titles = await titles.Take(50).ToListAsync()
             };
 
             return View(titleVM);
