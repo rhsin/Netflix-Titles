@@ -9,6 +9,7 @@ namespace MvcTitle.Services
     public class TitleFilter
     {
         private IQueryable<Title> _titles;
+
         public TitleFilter(IQueryable<Title> titles)
         {
             _titles = titles;
