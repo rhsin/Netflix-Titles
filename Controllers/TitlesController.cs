@@ -24,7 +24,8 @@ namespace MvcTitle.Controllers
         }
 
         // GET: Titles
-        public async Task<IActionResult> Index(string titleType, string titleGenre, string searchString, string castString)
+        public async Task<IActionResult> Index(string titleType, string titleGenre, string titleDate,
+            string searchString, string castString, string descString)
         {
             IQueryable<string> genreQuery = from t in _context.Title
                                             orderby t.Genre
@@ -33,17 +34,22 @@ namespace MvcTitle.Controllers
             IQueryable<string> typeQuery = from t in _context.Title
                                            select t.Type;
 
+            IQueryable<string> dateQuery = from t in _context.Title
+                                           orderby t.ReleaseDate
+                                           select t.ReleaseDate;
+
             var allTitles = from t in _context.Title
                          select t;
 
-            IQueryable<Title> filteredTitles = _filterService.FilterByOption(allTitles, titleType, titleGenre);
+            IQueryable<Title> filteredTitles = _filterService.FilterByOption(allTitles, titleType, titleGenre, titleDate);
 
-            IQueryable<Title> titles = _filterService.FilterByText(filteredTitles, searchString, castString);
+            IQueryable<Title> titles = _filterService.FilterByText(filteredTitles, searchString, castString, descString);
 
             var titleVM = new TitleViewModel
             {
                 Types = new SelectList(await typeQuery.Distinct().ToListAsync()),
                 Genres = new SelectList(await genreQuery.Distinct().ToListAsync()),
+                ReleaseDates = new SelectList(await dateQuery.Distinct().ToListAsync()),
                 Titles = await titles.Take(50).ToListAsync()
             };
 

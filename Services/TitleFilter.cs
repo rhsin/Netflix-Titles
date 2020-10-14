@@ -6,7 +6,7 @@ namespace MvcTitle.Services
 {
     public class TitleFilter : IFilterService
     {
-        public IQueryable<Title> FilterByOption(IQueryable<Title> titles, string titleType, string titleGenre)
+        public IQueryable<Title> FilterByOption(IQueryable<Title> titles, string titleType, string titleGenre, string titleDate)
         {
             if (!String.IsNullOrEmpty(titleType))
             {
@@ -18,10 +18,15 @@ namespace MvcTitle.Services
                 titles = titles.Where(t => t.Genre == titleGenre);
             }
 
+            if (!String.IsNullOrEmpty(titleDate))
+            {
+                titles = titles.Where(t => t.ReleaseDate == titleDate);
+            }
+
             return titles;
         }
 
-        public IQueryable<Title> FilterByText(IQueryable<Title> titles, string searchString, string castString)
+        public IQueryable<Title> FilterByText(IQueryable<Title> titles, string searchString, string castString, string descString)
         {
             if (!String.IsNullOrEmpty(searchString))
             {
@@ -31,6 +36,11 @@ namespace MvcTitle.Services
             if (!String.IsNullOrEmpty(castString))
             {
                 titles = titles.Where(t => t.Cast.Contains(castString));
+            }
+
+            if (!String.IsNullOrEmpty(descString))
+            {
+                titles = titles.Where(t => t.Description.Contains(descString));
             }
 
             return titles;

@@ -15,14 +15,16 @@
         <select asp-for="TitleType" asp-items="Model.Types">
             <option value="">All</option>
         </select>
-
         <select asp-for="TitleGenre" asp-items="Model.Genres">
+            <option value="">All</option>
+        </select>
+        <select asp-for="TitleDate" asp-items="Model.ReleaseDates">
             <option value="">All</option>
         </select>
 
         Name: <input type="text" name="SearchString">
-
         Cast: <input type="text" name="CastString">
+        Description: <input type="text" name="DescString">
         <input type="submit" value="Filter" />
     </p>
 </form>
