@@ -1,11 +1,17 @@
-﻿using MvcTitle.Models;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using MvcTitle.Data;
+using MvcTitle.Models;
 
 namespace MvcTitle.Repositories
 {
     public interface ITitleRepository
     {
+        public IQueryable<Title> GetTitles(MvcTitleContext context);
+
+        public IDictionary<string, IQueryable<string>> GetQuery(MvcTitleContext context);
+
         public IQueryable<Title> FilterByOption(IQueryable<Title> titles, string titleType,
             string titleGenre, string titleDate);
 
@@ -15,7 +21,37 @@ namespace MvcTitle.Repositories
 
     public class TitleRepository : ITitleRepository
     {
-        public IQueryable<Title> FilterByOption(IQueryable<Title> titles, string titleType, string titleGenre, string titleDate)
+        public IQueryable<Title> GetTitles(MvcTitleContext context)
+        {
+            IQueryable<Title> titles = from t in context.Title
+                                       select t;
+            return titles;
+        }
+
+        public IDictionary<string, IQueryable<string>> GetQuery(MvcTitleContext context)
+        {
+            IQueryable<string> genreQuery = from t in context.Title
+                                            orderby t.Genre
+                                            select t.Genre;
+
+            IQueryable<string> typeQuery = from t in context.Title
+                                           select t.Type;
+
+            IQueryable<string> dateQuery = from t in context.Title
+                                           orderby t.ReleaseDate
+                                           select t.ReleaseDate;
+
+            IDictionary<string, IQueryable<string>> query = new Dictionary<string, IQueryable<string>>();
+
+            query.Add("genre", genreQuery);
+            query.Add("type", typeQuery);
+            query.Add("date", dateQuery);
+
+            return query;
+        }
+
+        public IQueryable<Title> FilterByOption(IQueryable<Title> titles, string titleType,
+            string titleGenre, string titleDate)
         {
             if (!String.IsNullOrEmpty(titleType))
             {
@@ -35,7 +71,8 @@ namespace MvcTitle.Repositories
             return titles;
         }
 
-        public IQueryable<Title> FilterByText(IQueryable<Title> titles, string searchString, string castString, string descString)
+        public IQueryable<Title> FilterByText(IQueryable<Title> titles, string searchString, 
+            string castString, string descString)
         {
             if (!String.IsNullOrEmpty(searchString))
             {

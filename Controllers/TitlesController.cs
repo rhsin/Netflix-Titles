@@ -26,19 +26,9 @@ namespace MvcTitle.Controllers
         public async Task<IActionResult> Index(string titleType, string titleGenre, string titleDate,
             string searchString, string castString, string descString)
         {
-            IQueryable<string> genreQuery = from t in _context.Title
-                                            orderby t.Genre
-                                            select t.Genre;
+            IDictionary<string, IQueryable<string>> query = _titleRepository.GetQuery(_context);
 
-            IQueryable<string> typeQuery = from t in _context.Title
-                                           select t.Type;
-
-            IQueryable<string> dateQuery = from t in _context.Title
-                                           orderby t.ReleaseDate
-                                           select t.ReleaseDate;
-
-            var allTitles = from t in _context.Title
-                         select t;
+            IQueryable<Title> allTitles = _titleRepository.GetTitles(_context);
 
             IQueryable<Title> filteredTitles = _titleRepository.FilterByOption(allTitles, titleType, titleGenre, titleDate);
 
@@ -46,9 +36,9 @@ namespace MvcTitle.Controllers
 
             var titleVM = new TitleViewModel
             {
-                Types = new SelectList(await typeQuery.Distinct().ToListAsync()),
-                Genres = new SelectList(await genreQuery.Distinct().ToListAsync()),
-                ReleaseDates = new SelectList(await dateQuery.Distinct().ToListAsync()),
+                Types = new SelectList(await query["type"].Distinct().ToListAsync()),
+                Genres = new SelectList(await query["genre"].Distinct().ToListAsync()),
+                ReleaseDates = new SelectList(await query["date"].Distinct().ToListAsync()),
                 Titles = await titles.Take(50).ToListAsync()
             };
 
