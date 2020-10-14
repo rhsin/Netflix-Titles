@@ -12,6 +12,7 @@ using MvcTitle.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using MvcTitle.Services;
+using MvcTitle.Repositories;
 
 namespace MvcTitle
 {
@@ -32,7 +33,9 @@ namespace MvcTitle
             services.AddDbContext<MvcTitleContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("MvcTitleContext")));
 
-            services.AddSingleton<IFilterService, TitleFilter>();
+            services.AddScoped<ICsvImporter, CsvImporter>();
+
+            services.AddScoped<ITitleRepository, TitleRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

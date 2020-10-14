@@ -7,20 +7,19 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MvcTitle.Data;
 using MvcTitle.Models;
-using MvcTitle.Services;
+using MvcTitle.Repositories;
 
 namespace MvcTitle.Controllers
 {
     public class TitlesController : Controller
     {
         private readonly MvcTitleContext _context;
+        private readonly ITitleRepository _titleRepository;
 
-        private IFilterService _filterService;
-
-        public TitlesController(MvcTitleContext context, IFilterService filterService)
+        public TitlesController(MvcTitleContext context, ITitleRepository titleRepository)
         {
             _context = context;
-            _filterService = filterService;
+            _titleRepository = titleRepository;
         }
 
         // GET: Titles
@@ -41,9 +40,9 @@ namespace MvcTitle.Controllers
             var allTitles = from t in _context.Title
                          select t;
 
-            IQueryable<Title> filteredTitles = _filterService.FilterByOption(allTitles, titleType, titleGenre, titleDate);
+            IQueryable<Title> filteredTitles = _titleRepository.FilterByOption(allTitles, titleType, titleGenre, titleDate);
 
-            IQueryable<Title> titles = _filterService.FilterByText(filteredTitles, searchString, castString, descString);
+            IQueryable<Title> titles = _titleRepository.FilterByText(filteredTitles, searchString, castString, descString);
 
             var titleVM = new TitleViewModel
             {

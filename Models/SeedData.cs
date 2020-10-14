@@ -1,12 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using MvcTitle.Data;
-using MvcTitle.Mappers;
+using MvcTitle.Services;
 using System;
-using System.IO;
-using System.Globalization;
 using System.Linq;
-using CsvHelper;
 
 namespace MvcTitle.Models
 {
@@ -17,8 +14,6 @@ namespace MvcTitle.Models
             using (var context = new MvcTitleContext(
                 serviceProvider.GetRequiredService<
                     DbContextOptions<MvcTitleContext>>()))
-            using (var reader = new StreamReader(@"C:\Users\Ryan\source\repos\MvcTitle\Models\netflix_titles.csv"))
-            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
                 // Look for any titles.
                 if (context.Title.Any())
@@ -26,16 +21,9 @@ namespace MvcTitle.Models
                     return;   // DB has been seeded
                 }
 
-                csv.Configuration.RegisterClassMap<TitleMap>();
+                var csvImporter = new CsvImporter();
 
-                var titles = csv.GetRecords<Title>();
-
-                foreach (var title in titles)
-                {
-                    context.Title.Add(title);
-                }
-                
-                context.SaveChanges();
+                csvImporter.ImportTitles(context);
             }
         }
     }
