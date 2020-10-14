@@ -26,13 +26,10 @@ namespace MvcTitle.Controllers
         public async Task<IActionResult> Index(string titleType, string titleGenre, string titleDate,
             string searchString, string castString, string descString)
         {
-            IDictionary<string, IQueryable<string>> query = _titleRepository.GetQuery(_context);
+            IDictionary<string, IQueryable<string>> query = _titleRepository.GetQuery();
 
-            IQueryable<Title> allTitles = _titleRepository.GetTitles(_context);
-
-            IQueryable<Title> filteredTitles = _titleRepository.FilterByOption(allTitles, titleType, titleGenre, titleDate);
-
-            IQueryable<Title> titles = _titleRepository.FilterByText(filteredTitles, searchString, castString, descString);
+            IQueryable<Title> titles = _titleRepository.Filter(titleType, titleGenre,
+                titleDate, searchString, castString, descString);
 
             var titleVM = new TitleViewModel
             {

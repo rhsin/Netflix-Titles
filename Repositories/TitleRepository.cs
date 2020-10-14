@@ -8,36 +8,31 @@ namespace MvcTitle.Repositories
 {
     public interface ITitleRepository
     {
-        public IQueryable<Title> GetTitles(MvcTitleContext context);
+        public IDictionary<string, IQueryable<string>> GetQuery();
 
-        public IDictionary<string, IQueryable<string>> GetQuery(MvcTitleContext context);
-
-        public IQueryable<Title> FilterByOption(IQueryable<Title> titles, string titleType,
-            string titleGenre, string titleDate);
-
-        public IQueryable<Title> FilterByText(IQueryable<Title> titles, string searchString,
-            string castString, string descString);
+        public IQueryable<Title> Filter(string titleType, string titleGenre, string titleDate, 
+            string searchString, string castString, string descString);
     }
 
     public class TitleRepository : ITitleRepository
     {
-        public IQueryable<Title> GetTitles(MvcTitleContext context)
+        private MvcTitleContext _context;
+
+        public TitleRepository(MvcTitleContext context)
         {
-            IQueryable<Title> titles = from t in context.Title
-                                       select t;
-            return titles;
+            _context = context;
         }
 
-        public IDictionary<string, IQueryable<string>> GetQuery(MvcTitleContext context)
+        public IDictionary<string, IQueryable<string>> GetQuery()
         {
-            IQueryable<string> genreQuery = from t in context.Title
+            IQueryable<string> genreQuery = from t in _context.Title
                                             orderby t.Genre
                                             select t.Genre;
 
-            IQueryable<string> typeQuery = from t in context.Title
+            IQueryable<string> typeQuery = from t in _context.Title
                                            select t.Type;
 
-            IQueryable<string> dateQuery = from t in context.Title
+            IQueryable<string> dateQuery = from t in _context.Title
                                            orderby t.ReleaseDate
                                            select t.ReleaseDate;
 
@@ -50,9 +45,12 @@ namespace MvcTitle.Repositories
             return query;
         }
 
-        public IQueryable<Title> FilterByOption(IQueryable<Title> titles, string titleType,
-            string titleGenre, string titleDate)
+        public IQueryable<Title> Filter(string titleType, string titleGenre, string titleDate, 
+            string searchString, string castString, string descString)
         {
+            IQueryable<Title> titles = from t in _context.Title
+                                       select t;
+
             if (!String.IsNullOrEmpty(titleType))
             {
                 titles = titles.Where(t => t.Type == titleType);
@@ -68,12 +66,6 @@ namespace MvcTitle.Repositories
                 titles = titles.Where(t => t.ReleaseDate == titleDate);
             }
 
-            return titles;
-        }
-
-        public IQueryable<Title> FilterByText(IQueryable<Title> titles, string searchString, 
-            string castString, string descString)
-        {
             if (!String.IsNullOrEmpty(searchString))
             {
                 titles = titles.Where(t => t.Name.Contains(searchString));

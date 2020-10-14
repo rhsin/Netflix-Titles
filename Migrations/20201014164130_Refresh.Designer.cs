@@ -9,7 +9,7 @@ using MvcTitle.Data;
 namespace MvcTitle.Migrations
 {
     [DbContext(typeof(MvcTitleContext))]
-    [Migration("20201014101049_Refresh")]
+    [Migration("20201014164130_Refresh")]
     partial class Refresh
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
