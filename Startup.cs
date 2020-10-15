@@ -28,6 +28,8 @@ namespace MvcTitle
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
+
             services.AddControllersWithViews();
 
             services.AddDbContext<MvcTitleContext>(options =>
@@ -52,6 +54,16 @@ namespace MvcTitle
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
+
+            // Shows UseCors with CorsPolicyBuilder.
+            app.UseCors(builder =>
+            {
+                builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+            });
+
             app.UseStaticFiles();
 
             app.UseRouting();

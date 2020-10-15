@@ -7,12 +7,10 @@ export const GET_USER = 'GET_USER';
 export const SHOW_ERROR = 'SHOW_ERROR';
 export const RESET_ERROR = 'RESET_ERROR';
 
-const url = 'http://localhost:44315/api/';
-
-export function fetchTitles(slug) {
+export function fetchTitles(url) {
     return dispatch => {
         dispatch({type: FETCH_TITLES_BEGIN});
-        axios.get(url + slug)
+        axios.get(url)
         .then(res => dispatch({
             type: FETCH_TITLES_SUCCESS,
             titles: res.data
@@ -26,16 +24,18 @@ export function fetchTitles(slug) {
 
 export function getUser() {
     return dispatch => {
-        axios.get(url + 'admin')
+        axios.get('https://localhost:44315/api/users/1')
         .then(res => dispatch({
             type: GET_USER,
             user: res.data
         }))
-        .catch(err => console.log(err));
+        .catch(err => dispatch(
+            showError(err)
+        ));
     };
 }
 
-export const fetchAllTitles = () => fetchTitles('TitlesApi');
+export const fetchAllTitles = () => fetchTitles('https://localhost:44315/api/TitlesApi');
 
 export const showError = (err) => ({type: SHOW_ERROR, error: err.message});
 

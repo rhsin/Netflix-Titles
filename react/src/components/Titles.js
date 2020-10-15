@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 function Titles({ setRefresh }) {
     const [search, setSearch] = useState('');
-
-    const dispatch = useDispatch();
 
     const titles = useSelector(state => state.titles);
 
@@ -18,9 +16,12 @@ function Titles({ setRefresh }) {
             <div>
                 {titles.map((item, index) => index < 50 && (
                     <div key={item.id} className='card-list'>
-                        <div className='card-title'>
-                            {item.name}
-                        </div>
+                        <div className='card-title'>{item.name}</div>
+                        <div className='card-text'>{item.type}</div>
+                        <div className='card-text'>{item.releaseDate}</div>
+                        <div className='card-text'>{item.genre}</div>
+                        <div className='card-text'>{item.cast}</div>
+                        <div className='card-text'>{item.description}</div>
                     </div>    
                 ))}
             </div>
