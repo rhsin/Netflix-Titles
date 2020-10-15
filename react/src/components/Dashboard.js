@@ -13,9 +13,9 @@ function Dashboard() {
     const loading = useSelector(state => state.loading);
     const error = useSelector(state => state.error);
 
-    // useEffect(()=> {
-    //     dispatch(fetchAllTitles());
-    // }, []);
+    useEffect(()=> {
+        dispatch(fetchAllTitles());
+    }, []);
 
     // useEffect(()=> {
     //     dispatch(getUser());

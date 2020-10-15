@@ -7,7 +7,7 @@ export const GET_USER = 'GET_USER';
 export const SHOW_ERROR = 'SHOW_ERROR';
 export const RESET_ERROR = 'RESET_ERROR';
 
-const url = 'http://localhost:8000/api/';
+const url = 'http://localhost:44315/api/';
 
 export function fetchTitles(slug) {
     return dispatch => {
@@ -15,7 +15,7 @@ export function fetchTitles(slug) {
         axios.get(url + slug)
         .then(res => dispatch({
             type: FETCH_TITLES_SUCCESS,
-            titles: res.data.data
+            titles: res.data
         }))
         .catch(err => dispatch({
             type: FETCH_TITLES_FAILURE,
@@ -35,7 +35,7 @@ export function getUser() {
     };
 }
 
-export const fetchAllTitles = () => fetchTitles('titles');
+export const fetchAllTitles = () => fetchTitles('TitlesApi');
 
 export const showError = (err) => ({type: SHOW_ERROR, error: err.message});
 

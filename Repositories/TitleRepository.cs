@@ -8,6 +8,8 @@ namespace MvcTitle.Repositories
 {
     public interface ITitleRepository
     {
+        public List<Title> GetTitles();
+
         public IDictionary<string, IQueryable<string>> GetQuery();
 
         public IQueryable<Title> Filter(string titleType, string titleGenre, string titleDate, 
@@ -21,6 +23,14 @@ namespace MvcTitle.Repositories
         public TitleRepository(MvcTitleContext context)
         {
             _context = context;
+        }
+
+        public List<Title> GetTitles()
+        {
+            IQueryable<Title> titles = from t in _context.Title
+                                       select t;
+
+            return titles.Take(50).ToList();
         }
 
         public IDictionary<string, IQueryable<string>> GetQuery()
