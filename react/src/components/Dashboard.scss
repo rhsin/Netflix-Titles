@@ -28,8 +28,9 @@ a {
     border: none; 
     color:whitesmoke; 
     padding: .4rem .8rem; 
-    margin: .1rem;
+    margin: .2rem 0 .5rem 0;
     border-radius: 5px;
+    font-weight: bold;
     cursor: pointer;
 }
 
@@ -100,7 +101,7 @@ a {
 }
 
 .green {
-    background-color: rgb(111, 163, 111);
+    background-color: rgb(20, 116, 87);
 }
 
 .red {

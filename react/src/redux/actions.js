@@ -35,7 +35,13 @@ export function getUser() {
     };
 }
 
-export const fetchAllTitles = () => fetchTitles('https://localhost:44315/api/TitlesApi');
+export const fetchAllTitles = () => (
+    fetchTitles('https://localhost:44315/api/TitlesApi')
+);
+
+export const fetchSearchTitles = (name) => (
+    fetchTitles(`https://localhost:44315/api/TitlesApi/Filter?name=${name}`)
+);
 
 export const showError = (err) => ({type: SHOW_ERROR, error: err.message});
 

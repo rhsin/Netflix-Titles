@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import './Dashboard.scss';
 import Titles from './Titles';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllTitles, getUser } from '../redux/actions';
 
 function Dashboard() {
-    const [refresh, setRefresh] = useState(false);
-
     const dispatch = useDispatch();
 
     const user = useSelector(state => state.user);
@@ -28,13 +26,13 @@ function Dashboard() {
             <div className='row-flex'>
                 {user && (
                     <div className='card'>
-                        <div className='card-title'>{user.data.name}</div> 
-                        <div className='card-text'>{user.data.email}</div>
+                        <div className='card-title'>{user.name}</div> 
+                        <div className='card-text'>{user.email}</div>
                     </div>  
                 )}
             </div>
             <div className='row-flex'>
-                <Titles setRefresh={()=> setRefresh(!refresh)} />
+                <Titles />
             </div>
         </div>
     );

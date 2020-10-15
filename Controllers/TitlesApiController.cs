@@ -38,7 +38,7 @@ namespace MvcTitle.Controllers
         {
             IQueryable<Title> titles = _titleRepository.Filter(type, genre, date, name, cast, desc);
 
-            return await titles.Take(50).ToListAsync();
+            return await titles.Take(100).ToListAsync();
         }
 
         // GET: api/TitlesApi/5

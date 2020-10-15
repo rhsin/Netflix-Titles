@@ -11,7 +11,7 @@ import {
 
 export const initialState = {
     titles: [],
-    user: null,
+    user: {name: 'Ryan', email: 'ryan@test.com'},
     loading: false,
     error: null
 };
