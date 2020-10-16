@@ -39,8 +39,8 @@ export const fetchAllTitles = () => (
     fetchTitles('https://localhost:44315/api/TitlesApi')
 );
 
-export const fetchSearchTitles = (name) => (
-    fetchTitles(`https://localhost:44315/api/TitlesApi/Filter?name=${name}`)
+export const fetchSearchTitles = (name, order) => (
+    fetchTitles(`https://localhost:44315/api/TitlesApi/Filter?name=${name}&order=${order}`)
 );
 
 export const showError = (err) => ({type: SHOW_ERROR, error: err.message});
