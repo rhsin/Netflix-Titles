@@ -24,7 +24,7 @@ export function fetchTitles(url) {
 
 export function getUser() {
     return dispatch => {
-        axios.get('https://localhost:44315/api/users/1')
+        axios.get('https://localhost:44315/api/Users/1')
         .then(res => dispatch({
             type: GET_USER,
             user: res.data
@@ -36,11 +36,11 @@ export function getUser() {
 }
 
 export const fetchAllTitles = () => (
-    fetchTitles('https://localhost:44315/api/TitlesApi')
+    fetchTitles('https://localhost:44315/api/Titles')
 );
 
 export const fetchSearchTitles = (name, order) => (
-    fetchTitles(`https://localhost:44315/api/TitlesApi/Filter?name=${name}&order=${order}`)
+    fetchTitles(`https://localhost:44315/api/Titles/Filter?name=${name}&order=${order}`)
 );
 
 export const showError = (err) => ({type: SHOW_ERROR, error: err.message});

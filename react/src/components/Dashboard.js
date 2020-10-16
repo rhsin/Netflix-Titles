@@ -15,9 +15,9 @@ function Dashboard() {
         dispatch(fetchAllTitles());
     }, []);
 
-    // useEffect(()=> {
-    //     dispatch(getUser());
-    // }, [refresh]);
+    useEffect(()=> {
+        dispatch(getUser());
+    }, []);
 
     return (
         <div className='container-grid'>
