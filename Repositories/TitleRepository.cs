@@ -14,8 +14,6 @@ namespace MvcTitle.Repositories
 
         public IQueryable<Title> Filter(string titleType, string titleGenre, string titleDate, 
             string searchString, string castString, string descString);
-
-        public IQueryable<Title> Order(IQueryable<Title> titles, string sortOrder);
     }
 
     public class TitleRepository : ITitleRepository
@@ -91,23 +89,6 @@ namespace MvcTitle.Repositories
             if (!String.IsNullOrEmpty(descString))
             {
                 titles = titles.Where(t => t.Description.Contains(descString));
-            }
-
-            return titles;
-        }
-
-        public IQueryable<Title> Order(IQueryable<Title> titles, string sortOrder)
-        {
-            switch (sortOrder)
-            {
-                case "date_asc":
-                    titles = titles.OrderBy(t => t.ReleaseDate);
-                    break;
-                case "date_desc":
-                    titles = titles.OrderByDescending(t => t.ReleaseDate);
-                    break;
-                default:
-                    break;
             }
 
             return titles;

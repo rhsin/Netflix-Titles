@@ -34,11 +34,9 @@ namespace MvcTitle.Controllers
         // GET: api/TitlesApi/Filter
         [HttpGet("filter")]
         public async Task<ActionResult<IEnumerable<Title>>> Filter(string type, string genre, string date,
-            string name, string cast, string desc, string sortOrder)
+            string name, string cast, string desc)
         {
-            IQueryable<Title> filteredTitles = _titleRepository.Filter(type, genre, date, name, cast, desc);
-
-            IQueryable<Title> titles = _titleRepository.Order(filteredTitles, sortOrder);
+            IQueryable<Title> titles = _titleRepository.Filter(type, genre, date, name, cast, desc);
 
             return await titles.Take(100).ToListAsync();
         }
