@@ -2,6 +2,12 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import App from '../App';
 
+test('renders current or default user email', () => {
+    const { getByText } = render(<App />);
+    const textElement = getByText(/@/);
+    expect(textElement).toBeInTheDocument();
+});
+
 test('renders search titles input', () => {
     const { getByText } = render(<App />);
     const inputElement = getByText(/Search Titles/);

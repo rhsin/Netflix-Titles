@@ -4,14 +4,20 @@ import { fetchSearchTitles } from '../redux/actions';
 
 function Titles() {
     const [search, setSearch] = useState('');
+    const [order, setOrder] = useState('');
 
     const dispatch = useDispatch();
 
     const titles = useSelector(state => state.titles);
 
+    const sortOrder = (e, order) => {
+        e.preventDefault();
+        setOrder(order);
+    };
+
     const searchTitles = (e) => {
         e.preventDefault();
-        dispatch(fetchSearchTitles(search));
+        dispatch(fetchSearchTitles(search, order));
     };
 
     return (
@@ -19,6 +25,12 @@ function Titles() {
             <form>
                 <label htmlFor='search'>Search Titles</label>
                 <input type='text' id='search' onChange={e => setSearch(e.target.value)} />
+                <button className='btn blue' onClick={e => sortOrder(e, 'date_desc')}>
+                    Order Desc.
+                </button>
+                <button className='btn red' onClick={e => sortOrder(e, 'date_asc')}>
+                    Order Asc.
+                </button>
                 <button className='btn green' onClick={e => searchTitles(e)}>
                     Filter
                 </button>
