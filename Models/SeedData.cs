@@ -15,10 +15,24 @@ namespace MvcTitle.Models
                 serviceProvider.GetRequiredService<
                     DbContextOptions<MvcTitleContext>>()))
             {
-                // Look for any titles.
+                if (context.User.Any())
+                {
+                    return;
+                }
+
+                var user = new User
+                {
+                    Name = "Ryan",
+                    Email = "ryan@test.com"
+                };
+
+                context.User.Add(user);
+
+                context.SaveChanges();
+
                 if (context.Title.Any())
                 {
-                    return;   // DB has been seeded
+                    return;   
                 }
 
                 var csvImporter = new CsvImporter();
