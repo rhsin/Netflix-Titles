@@ -1,10 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './Dashboard.scss';
 import Titles from './Titles';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchAllTitles, getUser } from '../redux/actions';
+import { fetchAllTitles, getUser, showError, resetError } from '../redux/actions';
 
 function Dashboard() {
+    const [refresh, setRefresh] = useState(false);
+
     const dispatch = useDispatch();
 
     const user = useSelector(state => state.user);
@@ -19,12 +22,30 @@ function Dashboard() {
 
     useEffect(()=> {
         dispatch(getUser());
-    }, []);
+    }, [refresh]);
+
+    const clearError = () => {
+        dispatch(resetError());
+    };
+
+    const removeTitle = (id) => {
+        axios.post(`https://localhost:44315/api/Users/RemoveTitle/${id}/1`)
+        .then(res => console.log(res.data))
+        .catch(err => dispatch(showError(err)));
+        setRefresh(!refresh);
+    };
 
     return (
         <div className='container-grid'>
-            {loading && <div className='alert'>Loading...</div>}
-            {error && <div className='alert'>Error: {error}</div>}
+            {loading && (<div className='alert'>Loading...</div>)}
+            {error && (
+                <div className='alert'>
+                    <button className='btn-remove' onClick={()=> clearError()}>
+                        Clear
+                    </button>
+                    Error: {error}
+                </div>
+            )}
             <div className='row-flex'>
                 {user && (
                     <div className='card'>
@@ -33,7 +54,10 @@ function Dashboard() {
                         <div className='card-title'>Titles:</div>
                         <div>
                             {userTitles && userTitles.map(item => (
-                                <div key={item.id} className='card-text'>
+                                <div key={item.id} className='card-item'>
+                                    <button className='btn-remove' onClick={()=> removeTitle(item.id)}>
+                                        -
+                                    </button>
                                     {item.name} ({item.releaseDate})
                                 </div>
                             ))}
@@ -42,7 +66,7 @@ function Dashboard() {
                 )}
             </div>
             <div className='row-flex'>
-                <Titles />
+                <Titles setRefresh={()=> setRefresh(!refresh)} />
             </div>
         </div>
     );

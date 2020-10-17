@@ -35,7 +35,7 @@ namespace MvcTitle.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(int id)
         {
-            var user = await _userRepository.GetUsers().SingleAsync(x => x.Id == id);
+            var user = await _userRepository.GetUsers().SingleAsync(u => u.Id == id);
 
             if (user == null)
             {
@@ -43,6 +43,24 @@ namespace MvcTitle.Controllers
             }
 
             return user;
+        }
+
+        // POST: api/Users/AddTitle/1/1
+        [HttpPost("AddTitle/{titleId}/{userId}")]
+        public string AddTitle(int titleId, int userId)
+        {
+             _userRepository.AddTitle(titleId, userId);
+
+            return "Title Added";
+        }
+
+        // POST: api/Users/RemoveTitle/1/1
+        [HttpPost("RemoveTitle/{titleId}/{userId}")]
+        public string RemoveTitle(int titleId, int userId)
+        {
+            _userRepository.RemoveTitle(titleId, userId);
+
+            return "Title Removed";
         }
 
         // PUT: api/Users/5

@@ -32,7 +32,7 @@ namespace MvcTitle.Controllers
         }
 
         // GET: api/Titles/Filter
-        [HttpGet("filter")]
+        [HttpGet("Filter")]
         public async Task<ActionResult<IEnumerable<Title>>> Filter(string type, string genre, string date,
             string name, string cast, string desc, string order)
         {

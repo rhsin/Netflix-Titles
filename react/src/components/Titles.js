@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchSearchTitles } from '../redux/actions';
+import { fetchSearchTitles, showError } from '../redux/actions';
 
-function Titles() {
+function Titles({ setRefresh }) {
     const [search, setSearch] = useState('');
     const [order, setOrder] = useState('');
 
@@ -18,6 +19,13 @@ function Titles() {
     const searchTitles = (e) => {
         e.preventDefault();
         dispatch(fetchSearchTitles(search, order));
+    };
+
+    const addTitle = (id) => {
+        axios.post(`https://localhost:44315/api/Users/AddTitle/${id}/1`)
+        .then(res => console.log(res.data))
+        .catch(err => dispatch(showError(err)));
+        setRefresh();
     };
 
     return (
@@ -40,6 +48,9 @@ function Titles() {
                 {titles.map((item, index) => index < 100 && (
                     <div key={item.id} className='card-list'>
                         <div className='card-title'>{item.name}</div>
+                        <button className='btn-add' onClick={()=> addTitle(item.id)}>
+                            Save
+                        </button>
                         <div className='card-text'>{item.type}</div>
                         <div className='card-text'>{item.releaseDate}</div>
                         <div className='card-text'>{item.genre}</div>
