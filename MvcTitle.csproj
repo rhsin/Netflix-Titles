@@ -7,11 +7,14 @@
   <ItemGroup>
     <Compile Remove="Migrations\20201016190707_CreateUser.cs" />
     <Compile Remove="Migrations\20201016190707_CreateUser.Designer.cs" />
+    <Compile Remove="Migrations\20201017044510_JsonIgnore.cs" />
+    <Compile Remove="Migrations\20201017044510_JsonIgnore.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="CsvHelper" Version="15.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.9">

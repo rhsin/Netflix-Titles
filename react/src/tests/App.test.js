@@ -8,6 +8,12 @@ test('renders current or default user email', () => {
     expect(textElement).toBeInTheDocument();
 });
 
+test('renders current or default user titles', () => {
+    const { getByText } = render(<App />);
+    const textElement = getByText(/Titles:/);
+    expect(textElement).toBeInTheDocument();
+});
+
 test('renders search titles input', () => {
     const { getByText } = render(<App />);
     const inputElement = getByText(/Search Titles/);

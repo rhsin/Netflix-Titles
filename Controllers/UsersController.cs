@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MvcTitle.Data;
 using MvcTitle.Models;
+using MvcTitle.Repositories;
 
 namespace MvcTitle.Controllers
 {
@@ -15,24 +16,26 @@ namespace MvcTitle.Controllers
     public class UsersController : ControllerBase
     {
         private readonly MvcTitleContext _context;
+        private readonly IUserRepository _userRepository;
 
-        public UsersController(MvcTitleContext context)
+        public UsersController(MvcTitleContext context, IUserRepository userRepository)
         {
             _context = context;
+            _userRepository = userRepository;
         }
 
         // GET: api/Users
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUser()
         {
-            return await _context.User.ToListAsync();
+            return await _userRepository.GetUsers().ToListAsync();
         }
 
         // GET: api/Users/5
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(int id)
         {
-            var user = await _context.User.FindAsync(id);
+            var user = await _userRepository.GetUsers().SingleAsync(x => x.Id == id);
 
             if (user == null)
             {

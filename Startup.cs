@@ -30,7 +30,9 @@ namespace MvcTitle
         {
             services.AddCors();
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
 
             services.AddDbContext<MvcTitleContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("MvcTitleContext")));
@@ -38,6 +40,8 @@ namespace MvcTitle
             services.AddScoped<ICsvImporter, CsvImporter>();
 
             services.AddScoped<ITitleRepository, TitleRepository>();
+
+            services.AddScoped<IUserRepository, UserRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
