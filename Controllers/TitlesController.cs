@@ -46,11 +46,13 @@ namespace MvcTitle.Controllers
             return await titles.Take(100).ToListAsync();
         }
 
-        // GET: api/Titles/Data
-        [HttpGet("Data")]
-        public async Task<ActionResult<string>> GetData()
+        // GET: api/Titles/Details
+        [HttpGet("Details")]
+        public async Task<ActionResult<string>> GetDetails(string title, string type)
         {
-            return await _webClient.GetRequest("https://jsonplaceholder.typicode.com/posts/1");
+            string url = $"http://www.omdbapi.com/?t={title}&type={type}&apikey=ddb81f42";
+
+            return await _webClient.GetRequest(url);
         }
 
         // GET: api/Titles/5

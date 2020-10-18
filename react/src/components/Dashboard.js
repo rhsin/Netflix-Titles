@@ -7,12 +7,14 @@ import { fetchAllTitles, getUser, showError, resetError } from '../redux/actions
 
 function Dashboard() {
     const [refresh, setRefresh] = useState(false);
+    const [details, setDetails] = useState(null);
 
     const dispatch = useDispatch();
 
     const user = useSelector(state => state.user);
     const loading = useSelector(state => state.loading);
     const error = useSelector(state => state.error);
+    const url = useSelector(state => state.url);
 
     const userTitles = user.titleUsers && user.titleUsers.map(item => item.title);
 
@@ -29,8 +31,18 @@ function Dashboard() {
     };
 
     const removeTitle = (id) => {
-        axios.post(`https://localhost:44315/api/Users/RemoveTitle/${id}/1`)
+        axios.post(`${url}/Users/RemoveTitle/${id}/1`)
         .then(res => console.log(res.data))
+        .catch(err => dispatch(showError(err)));
+        setRefresh(!refresh);
+    };
+
+    const getDetails = (title, type) => {
+        if (type == 'TV Show') {
+            type = 'series'
+        };
+        axios.get(`${url}/Titles/Details?title=${title}&type=${type}`)
+        .then(res => setDetails(res.data))
         .catch(err => dispatch(showError(err)));
         setRefresh(!refresh);
     };
@@ -55,10 +67,18 @@ function Dashboard() {
                         <div>
                             {userTitles && userTitles.map(item => (
                                 <div key={item.id} className='card-item'>
-                                    <button className='btn-remove' onClick={()=> removeTitle(item.id)}>
+                                    <button
+                                        className='btn-remove'
+                                        onClick={()=> removeTitle(item.id)}
+                                    >
                                         -
                                     </button>
-                                    {item.name} ({item.releaseDate})
+                                    <button
+                                        className='btn-details'
+                                        onClick={()=> getDetails(item.name, item.type)}
+                                    >
+                                        {item.name} ({item.releaseDate})
+                                    </button>
                                 </div>
                             ))}
                         </div>
@@ -66,7 +86,11 @@ function Dashboard() {
                 )}
             </div>
             <div className='row-flex'>
-                <Titles setRefresh={()=> setRefresh(!refresh)} />
+                <Titles
+                    details={details}
+                    setRefresh={()=> setRefresh(!refresh)} 
+                    getDetails={(title, type) => getDetails(title, type)}
+                />
             </div>
         </div>
     );
