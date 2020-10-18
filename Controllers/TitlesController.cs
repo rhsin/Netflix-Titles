@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MvcTitle.Data;
 using MvcTitle.Models;
 using MvcTitle.Repositories;
+using MvcTitle.Services;
 
 namespace MvcTitle.Controllers
 {
@@ -17,11 +17,14 @@ namespace MvcTitle.Controllers
     {
         private readonly MvcTitleContext _context;
         private readonly ITitleRepository _titleRepository;
+        private readonly WebClient _webClient;
 
-        public TitlesController(MvcTitleContext context, ITitleRepository titleRepository)
+        public TitlesController(MvcTitleContext context, ITitleRepository titleRepository,
+            WebClient webClient)
         {
             _context = context;
             _titleRepository = titleRepository;
+            _webClient = webClient;
         }
 
         // GET: api/Titles
@@ -41,6 +44,13 @@ namespace MvcTitle.Controllers
             IQueryable<Title> titles = _titleRepository.Order(filteredTitles, order);
 
             return await titles.Take(100).ToListAsync();
+        }
+
+        // GET: api/Titles/Data
+        [HttpGet("Data")]
+        public async Task<ActionResult<string>> GetData()
+        {
+            return await _webClient.GetRequest("https://jsonplaceholder.typicode.com/posts/1");
         }
 
         // GET: api/Titles/5
