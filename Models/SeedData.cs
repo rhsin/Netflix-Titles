@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using MvcTitle.Data;
 using MvcTitle.Services;
-using System;
-using System.Linq;
 
 namespace MvcTitle.Models
 {

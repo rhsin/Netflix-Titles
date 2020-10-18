@@ -1,9 +1,9 @@
-﻿using MvcTitle.Data;
-using MvcTitle.Models;
-using System.IO;
+﻿using System.IO;
 using System.Globalization;
 using CsvHelper;
 using CsvHelper.Configuration;
+using MvcTitle.Data;
+using MvcTitle.Models;
 
 namespace MvcTitle.Services
 {

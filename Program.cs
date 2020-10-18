@@ -1,10 +1,9 @@
+using System;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using MvcTitle.Data;
 using MvcTitle.Models;
-using System;
 
 namespace MvcTitle
 {

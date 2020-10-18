@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MvcTitle.Data;
@@ -56,7 +57,7 @@ namespace MvcTitle.Controllers
         }
 
         // GET: api/Titles/5
-        [HttpGet("{id}")]
+        [HttpGet("{id}"), Authorize]
         public async Task<ActionResult<Title>> GetTitle(int id)
         {
             var title = await _context.Title.FindAsync(id);
