@@ -14,7 +14,7 @@ export const initialState = {
     user: {name: 'Guest', email: 'guest@test.com'},
     loading: false,
     error: null,
-    url: "https://localhost:44315/api"
+    url: 'https://localhost:44315/api'
 };
 
 export function reducer(state = initialState, action) {

@@ -3,8 +3,11 @@ import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchSearchTitles, showError } from '../redux/actions';
 
-function Titles({ details, setRefresh, getDetails }) {
+function Titles(props) {
+    const { details, setRefresh, getDetails, setDetails } = props;
+
     const [search, setSearch] = useState('');
+    const [cast, setCast] = useState('');
     const [order, setOrder] = useState('');
 
     const dispatch = useDispatch();
@@ -19,7 +22,7 @@ function Titles({ details, setRefresh, getDetails }) {
 
     const searchTitles = (e) => {
         e.preventDefault();
-        dispatch(fetchSearchTitles(search, order));
+        dispatch(fetchSearchTitles(search, cast, order));
     };
 
     const addTitle = (id) => {
@@ -36,6 +39,12 @@ function Titles({ details, setRefresh, getDetails }) {
                     <div className='card-title'>
                         {details.Title ? details.Title : 'N/A'}
                     </div>
+                    <button
+                        className='btn-add navy'
+                        onClick={()=> setDetails()}
+                    >
+                        Clear
+                    </button>
                     <div className='card-text'>
                         IMDB Rating: {details.imdbRating ? details.imdbRating : 'N/A'}
                     </div>
@@ -45,11 +54,15 @@ function Titles({ details, setRefresh, getDetails }) {
                     <div className='card-text'>
                         Rated: {details.Rated ? details.Rated : 'N/A'}
                     </div>
+                    <img src={details.Poster} alt='Title Poster'/>
                 </div>
             )}
+            <div className='card-title'>Search Titles</div>
             <form>
-                <label htmlFor='search'>Search Titles</label>
+                <label htmlFor='search'>Name</label>
                 <input type='text' id='search' onChange={e => setSearch(e.target.value)} />
+                <label htmlFor='cast'>Cast</label>
+                <input type='text' id='cast' onChange={e => setCast(e.target.value)} />
                 <button className='btn blue' onClick={e => sortOrder(e, 'date_desc')}>
                     Order Desc.
                 </button>

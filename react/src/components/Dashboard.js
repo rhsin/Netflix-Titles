@@ -61,7 +61,7 @@ function Dashboard() {
             <div className='row-flex'>
                 {user && (
                     <div className='card'>
-                        <div className='card-title'>{user.name}</div> 
+                        <div className='card-title header'>{user.name}</div> 
                         <div className='card-text'>{user.email}</div>
                         <div className='card-title'>Titles:</div>
                         <div>
@@ -90,6 +90,7 @@ function Dashboard() {
                     details={details}
                     setRefresh={()=> setRefresh(!refresh)} 
                     getDetails={(title, type) => getDetails(title, type)}
+                    setDetails={() => setDetails(null)}
                 />
             </div>
         </div>
