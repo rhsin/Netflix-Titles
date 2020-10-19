@@ -48,20 +48,20 @@ namespace MvcTitle.Controllers
 
         // POST: api/Users/AddTitle/1/1
         [HttpPost("AddTitle/{titleId}/{userId}")]
-        public string AddTitle(int titleId, int userId)
+        public ActionResult AddTitle(int titleId, int userId)
         {
              _userRepository.AddTitle(titleId, userId);
 
-            return "Title Added";
+            return Ok(new { message = "Title Added" });
         }
 
         // POST: api/Users/RemoveTitle/1/1
         [HttpPost("RemoveTitle/{titleId}/{userId}")]
-        public string RemoveTitle(int titleId, int userId)
+        public ActionResult RemoveTitle(int titleId, int userId)
         {
             _userRepository.RemoveTitle(titleId, userId);
 
-            return "Title Removed";
+            return Ok(new { message = "Title Removed" });
         }
 
         // PUT: api/Users/5

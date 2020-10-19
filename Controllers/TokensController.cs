@@ -10,7 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 namespace MvcTitle.Controllers
 {
     [Route("api/[controller]")]
-    public class TokensController : Controller
+    public class TokensController : ControllerBase
     {
         private IConfiguration _config;
 
