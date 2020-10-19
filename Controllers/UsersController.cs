@@ -11,6 +11,7 @@ using MvcTitle.Repositories;
 
 namespace MvcTitle.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
@@ -25,7 +26,7 @@ namespace MvcTitle.Controllers
         }
 
         // GET: api/Users
-        [HttpGet, Authorize]
+        [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUser()
         {
             return await _userRepository.GetUsers().ToListAsync();

@@ -1,7 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import axios from 'axios';
 import App from './App';
+import { AUTH_TOKEN } from './config/config';
 import * as serviceWorker from './serviceWorker';
+
+axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
 
 ReactDOM.render(
   <React.StrictMode>

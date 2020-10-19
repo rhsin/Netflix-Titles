@@ -12,6 +12,7 @@ using MvcTitle.Services;
 
 namespace MvcTitle.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class TitlesController : ControllerBase
@@ -57,7 +58,7 @@ namespace MvcTitle.Controllers
         }
 
         // GET: api/Titles/5
-        [HttpGet("{id}"), Authorize]
+        [HttpGet("{id}")]
         public async Task<ActionResult<Title>> GetTitle(int id)
         {
             var title = await _context.Title.FindAsync(id);

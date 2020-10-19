@@ -20,9 +20,21 @@ test('renders search titles input', () => {
     expect(inputElement).toBeInTheDocument();
 });
 
+test('renders search cast input', () => {
+    const { getByText } = render(<App />);
+    const inputElement = getByText(/Cast/);
+    expect(inputElement).toBeInTheDocument();
+});
+
 test('renders search filter button', () => {
     const { getByText } = render(<App />);
     const buttonElement = getByText(/Filter/);
+    expect(buttonElement).toBeInTheDocument();
+});
+
+test('renders search order button', () => {
+    const { getByText } = render(<App />);
+    const buttonElement = getByText(/Order Desc./);
     expect(buttonElement).toBeInTheDocument();
 });
 

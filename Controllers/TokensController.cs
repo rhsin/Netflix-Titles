@@ -10,8 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 namespace MvcTitle.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
-    public class TokensController : ControllerBase
+    public class TokensController : Controller
     {
         private IConfiguration _config;
 
@@ -20,27 +19,55 @@ namespace MvcTitle.Controllers
             _config = config;
         }
 
-        // GET: api/Tokens
-        [HttpGet, AllowAnonymous]
-        public IActionResult CreateToken()
+        [AllowAnonymous]
+        [HttpPost]
+        public IActionResult CreateToken([FromBody] LoginModel login)
         {
-            var tokenString = BuildToken();
+            IActionResult response = Unauthorized();
+            var user = Authenticate(login);
 
-            IActionResult response = Ok(new { token = tokenString });
+            if (user != null)
+            {
+                var tokenString = BuildToken(user);
+                response = Ok(new { token = tokenString });
+            }
 
             return response;
         }
 
-        private string BuildToken()
+        private string BuildToken(UserModel user)
         {
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-            var token = new JwtSecurityToken(
-                _config["Jwt:Issuer"], _config["Jwt:Issuer"], signingCredentials: creds
-            );
+            var token = new JwtSecurityToken(_config["Jwt:Issuer"], _config["Jwt:Audience"],
+                expires: DateTime.Now.AddDays(30), signingCredentials: creds);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
+        private UserModel Authenticate(LoginModel login)
+        {
+            UserModel user = null;
+
+            if (login.Username == "ryan" && login.Password == "test")
+            {
+                user = new UserModel { Name = "Ryan", Email = "ryan@test.com" };
+            }
+            return user;
+        }
+
+        public class LoginModel
+        {
+            public string Username { get; set; }
+            public string Password { get; set; }
+        }
+
+        private class UserModel
+        {
+            public string Name { get; set; }
+            public string Email { get; set; }
+        }
     }
 }
+
