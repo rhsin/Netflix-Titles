@@ -27,6 +27,7 @@ This app uses a responsive grid to cater to different devices & sizes.
 
 ## Built with 
 - [ASP.NET Core](https://dotnet.microsoft.com/apps/aspnet) v3.1.9
+- [Microsoft SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-2019) v15.0.0
 - [React](https://reactjs.org/) v16.2.0
 - [Redux](https://redux.js.org/) v4.0.5
 

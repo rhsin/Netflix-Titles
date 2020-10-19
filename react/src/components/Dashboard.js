@@ -55,7 +55,9 @@ function Dashboard() {
                     <button className='btn-remove' onClick={()=> clearError()}>
                         Clear
                     </button>
-                    {error}
+                    <span className='alert-text'>
+                        {error}
+                    </span>
                 </div>
             )}
             <div className='row-flex'>
