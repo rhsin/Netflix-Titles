@@ -20,7 +20,7 @@ namespace MvcTitle.Repositories
 
     public class TitleRepository : ITitleRepository
     {
-        private MvcTitleContext _context;
+        private readonly MvcTitleContext _context;
 
         public TitleRepository(MvcTitleContext context)
         {

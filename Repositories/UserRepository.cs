@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using MvcTitle.Data;
 using MvcTitle.Models;
@@ -11,14 +12,14 @@ namespace MvcTitle.Repositories
     {
         public IQueryable<User> GetUsers();
 
-        public void AddTitle(int titleId, int userId);
+        public Task AddTitle(int titleId, int userId);
 
-        public void RemoveTitle(int titleId, int userId);
+        public Task RemoveTitle(int titleId, int userId);
     }
 
     public class UserRepository : IUserRepository
     {
-        private MvcTitleContext _context;
+        private readonly MvcTitleContext _context;
 
         public UserRepository(MvcTitleContext context)
         {
@@ -32,7 +33,7 @@ namespace MvcTitle.Repositories
                 .ThenInclude(tu => tu.Title);
         }
 
-        public void AddTitle(int titleId, int userId)
+        public async Task AddTitle(int titleId, int userId)
         {
             var titleUser = new TitleUser
             {
@@ -42,18 +43,18 @@ namespace MvcTitle.Repositories
 
             _context.TitleUser.Add(titleUser);
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public void RemoveTitle(int titleId, int userId)
+        public async Task RemoveTitle(int titleId, int userId)
         {
-            var titleUser = _context.TitleUser
+            var titleUser = await _context.TitleUser
                 .Where(tu => tu.TitleId == titleId && tu.UserId == userId)
-                .Single();
+                .SingleAsync();
 
             _context.TitleUser.Remove(titleUser);
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 }
