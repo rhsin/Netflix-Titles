@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchSearchTitles, showError } from '../redux/actions';
+import { fetchSearchTitles, showMessage, showError } from '../redux/actions';
 
 function Titles(props) {
     const { details, setRefresh, getDetails, setDetails } = props;
@@ -27,7 +27,7 @@ function Titles(props) {
 
     const addTitle = (id) => {
         axios.post(`${url}/Users/AddTitle/${id}/1`)
-        .then(res => console.log(res.data))
+        .then(res => dispatch(showMessage(res.data)))
         .catch(err => dispatch(showError(err)));
         setRefresh();
     };

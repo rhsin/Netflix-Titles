@@ -50,18 +50,28 @@ namespace MvcTitle.Controllers
         [HttpPost("AddTitle/{titleId}/{userId}")]
         public async Task<IActionResult> AddTitle(int titleId, int userId)
         {
-             await _userRepository.AddTitle(titleId, userId);
+            string message = await _userRepository.AddTitle(titleId, userId);
 
-            return Ok(new { message = "Title Added" });
+            if (message != "Title Added To Account!")
+            {
+                return new JsonResult(message);
+            }
+
+            return Ok(message);
         }
 
         // POST: api/Users/RemoveTitle/1/1
         [HttpPost("RemoveTitle/{titleId}/{userId}")]
         public async Task<IActionResult> RemoveTitle(int titleId, int userId)
         {
-            await _userRepository.RemoveTitle(titleId, userId);
+            string message = await _userRepository.RemoveTitle(titleId, userId);
 
-            return Ok(new { message = "Title Removed" });
+            if (message != "Title Removed From Account!")
+            {
+                return new JsonResult(message);
+            }
+
+            return Ok(message);
         }
 
         // PUT: api/Users/5

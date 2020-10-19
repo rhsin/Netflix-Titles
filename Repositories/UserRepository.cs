@@ -12,9 +12,9 @@ namespace MvcTitle.Repositories
     {
         public IQueryable<User> GetUsers();
 
-        public Task AddTitle(int titleId, int userId);
+        public Task<string> AddTitle(int titleId, int userId);
 
-        public Task RemoveTitle(int titleId, int userId);
+        public Task<string> RemoveTitle(int titleId, int userId);
     }
 
     public class UserRepository : IUserRepository
@@ -33,7 +33,7 @@ namespace MvcTitle.Repositories
                 .ThenInclude(tu => tu.Title);
         }
 
-        public async Task AddTitle(int titleId, int userId)
+        public async Task<string> AddTitle(int titleId, int userId)
         {
             var titleUser = new TitleUser
             {
@@ -41,20 +41,38 @@ namespace MvcTitle.Repositories
                 UserId = userId
             };
 
-            _context.TitleUser.Add(titleUser);
+            try
+            {
+                _context.TitleUser.Add(titleUser);
 
-            await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+
+            return "Title Added To Account!";
         }
 
-        public async Task RemoveTitle(int titleId, int userId)
+        public async Task<string> RemoveTitle(int titleId, int userId)
         {
-            var titleUser = await _context.TitleUser
-                .Where(tu => tu.TitleId == titleId && tu.UserId == userId)
-                .SingleAsync();
+            try
+            {
+                var titleUser = await _context.TitleUser
+                    .Where(tu => tu.TitleId == titleId && tu.UserId == userId)
+                    .SingleAsync();
 
-            _context.TitleUser.Remove(titleUser);
+                _context.TitleUser.Remove(titleUser);
 
-            await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+
+            return "Title Removed From Account!";
         }
     }
 }

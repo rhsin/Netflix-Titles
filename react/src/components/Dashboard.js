@@ -3,7 +3,7 @@ import axios from 'axios';
 import './Dashboard.scss';
 import Titles from './Titles';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchAllTitles, getUser, showError, resetError } from '../redux/actions';
+import { fetchAllTitles, getUser, showMessage, showError, resetError } from '../redux/actions';
 
 function Dashboard() {
     const [refresh, setRefresh] = useState(false);
@@ -32,7 +32,7 @@ function Dashboard() {
 
     const removeTitle = (id) => {
         axios.post(`${url}/Users/RemoveTitle/${id}/1`)
-        .then(res => console.log(res.data))
+        .then(res => dispatch(showMessage(res.data)))
         .catch(err => dispatch(showError(err)));
         setRefresh(!refresh);
     };
@@ -55,7 +55,7 @@ function Dashboard() {
                     <button className='btn-remove' onClick={()=> clearError()}>
                         Clear
                     </button>
-                    Error: {error}
+                    {error}
                 </div>
             )}
             <div className='row-flex'>
