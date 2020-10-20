@@ -46,6 +46,18 @@ namespace MvcTitle.Controllers
             return user;
         }
 
+        [HttpGet("Claims")]
+        public IActionResult GetUserClaims()
+        {
+            var userId = _userRepository.GetCurrentId();
+            var role = _userRepository.GetCurrentRole(); 
+
+            return Ok(new {
+                userId = userId,
+                role = role
+            });
+        }
+
         // POST: api/Users/AddTitle/1/1
         [Authorize(Roles = "Admin")]
         [HttpPost("AddTitle/{titleId}/{userId}")]

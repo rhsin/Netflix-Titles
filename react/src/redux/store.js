@@ -12,7 +12,7 @@ import {
 
 export const initialState = {
     titles: [],
-    details: {},
+    details: null,
     user: {name: 'Guest', email: 'guest@test.com'},
     loading: false,
     error: null,

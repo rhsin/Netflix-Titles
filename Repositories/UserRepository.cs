@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using MvcTitle.Data;
 using MvcTitle.Models;
@@ -12,6 +14,10 @@ namespace MvcTitle.Repositories
     {
         public IQueryable<User> GetUsers();
 
+        public string GetCurrentId();
+
+        public string GetCurrentRole();
+
         public Task<string> AddTitle(int titleId, int userId);
 
         public Task<string> RemoveTitle(int titleId, int userId);
@@ -20,10 +26,12 @@ namespace MvcTitle.Repositories
     public class UserRepository : IUserRepository
     {
         private readonly MvcTitleContext _context;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public UserRepository(MvcTitleContext context)
+        public UserRepository(MvcTitleContext context, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public IQueryable<User> GetUsers()
@@ -31,6 +39,18 @@ namespace MvcTitle.Repositories
             return _context.User
                 .Include(u => u.TitleUsers)
                 .ThenInclude(tu => tu.Title);
+        }
+
+        public string GetCurrentId()
+        {
+            return _httpContextAccessor.HttpContext.User
+                .FindFirstValue(ClaimTypes.UserData);
+        }
+
+        public string GetCurrentRole()
+        {
+            return _httpContextAccessor.HttpContext.User
+                .FindFirstValue(ClaimTypes.Role);
         }
 
         public async Task<string> AddTitle(int titleId, int userId)

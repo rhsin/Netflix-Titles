@@ -34,6 +34,8 @@ namespace MvcTitle
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
 
+            services.AddHttpContextAccessor();
+
             services.AddDbContext<MvcTitleContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("MvcTitleContext")));
 

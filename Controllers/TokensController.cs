@@ -35,7 +35,10 @@ namespace MvcTitle.Controllers
             if (user != null)
             {
                 var tokenString = BuildToken(user);
-                response = Ok(new { token = tokenString });
+                response = Ok(new {
+                    user = user,
+                    token = tokenString 
+                });
             }
 
             return response;
@@ -47,6 +50,7 @@ namespace MvcTitle.Controllers
             {
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(JwtRegisteredClaimNames.Sub, user.Email),
+                new Claim(ClaimTypes.UserData, user.Id.ToString()),
                 new Claim(ClaimTypes.Name, user.Name),
                 new Claim(ClaimTypes.Role, user.Role),
             };
