@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchSearchTitles, showMessage, showError } from '../redux/actions';
 
 function Titles(props) {
-    const { details, setRefresh, getDetails, setDetails } = props;
+    const { details, setRefresh, getDetails, clearDetails } = props;
 
     const [search, setSearch] = useState('');
     const [cast, setCast] = useState('');
@@ -26,7 +26,7 @@ function Titles(props) {
     };
 
     const addTitle = (id) => {
-        axios.post(`${url}/Users/AddTitle/${id}/1`)
+        axios.post(`${url}/Users/AddTitle/${id}/2`)
         .then(res => dispatch(showMessage(res.data)))
         .catch(err => dispatch(showError(err)));
         setRefresh();
@@ -41,7 +41,7 @@ function Titles(props) {
                     </div>
                     <button
                         className='btn-add navy'
-                        onClick={()=> setDetails()}
+                        onClick={()=> clearDetails()}
                     >
                         Clear
                     </button>

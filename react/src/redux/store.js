@@ -3,6 +3,7 @@ import thunk from 'redux-thunk';
 import {
     FETCH_TITLES_BEGIN,
     FETCH_TITLES_SUCCESS,
+    FETCH_DETAILS_SUCCESS,
     FETCH_TITLES_FAILURE,
     GET_USER,
     SHOW_ERROR,
@@ -11,6 +12,7 @@ import {
 
 export const initialState = {
     titles: [],
+    details: {},
     user: {name: 'Guest', email: 'guest@test.com'},
     loading: false,
     error: null,
@@ -33,6 +35,12 @@ export function reducer(state = initialState, action) {
                 titles: action.titles,
                 loading: false
             };
+        case FETCH_DETAILS_SUCCESS:
+            return {
+                ...state,
+                details: action.details,
+                loading: false
+            };
         case FETCH_TITLES_FAILURE:
             return {
                 ...state,
@@ -52,6 +60,7 @@ export function reducer(state = initialState, action) {
         case RESET_ERROR:
             return {
                 ...state,
+                details: null,
                 error: null
             };
         default:

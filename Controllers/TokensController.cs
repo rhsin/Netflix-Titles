@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -37,11 +38,24 @@ namespace MvcTitle.Controllers
 
         private string BuildToken(UserModel user)
         {
+            var claims = new List<Claim>
+            {
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim(JwtRegisteredClaimNames.Sub, user.Email),
+                new Claim(ClaimTypes.Name, user.Name),
+                new Claim(ClaimTypes.Role, user.Role),
+            };
+
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-            var token = new JwtSecurityToken(_config["Jwt:Issuer"], _config["Jwt:Audience"],
-                expires: DateTime.Now.AddDays(30), signingCredentials: creds);
+            var token = new JwtSecurityToken(
+                _config["Jwt:Issuer"],
+                _config["Jwt:Audience"],
+                claims,
+                expires: DateTime.Now.AddDays(30),
+                signingCredentials: creds
+            );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
@@ -52,8 +66,24 @@ namespace MvcTitle.Controllers
 
             if (login.Username == "ryan" && login.Password == "test")
             {
-                user = new UserModel { Name = "Ryan", Email = "ryan@test.com" };
+                user = new UserModel
+                {
+                    Name = "Ryan",
+                    Email = "ryan@test.com",
+                    Role = "Admin"
+                };
             }
+
+            if (login.Username == "bob" && login.Password == "test")
+            {
+                user = new UserModel
+                {
+                    Name = "Bob",
+                    Email = "bob@test.com",
+                    Role = "Guest"
+                };
+            }
+
             return user;
         }
 
@@ -67,6 +97,7 @@ namespace MvcTitle.Controllers
         {
             public string Name { get; set; }
             public string Email { get; set; }
+            public string Role { get; set; }
         }
     }
 }

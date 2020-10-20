@@ -3,14 +3,14 @@ import axios from 'axios';
 import './Dashboard.scss';
 import Titles from './Titles';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchAllTitles, getUser, showMessage, showError, resetError } from '../redux/actions';
+import { fetchAllTitles, fetchDetails, getUser, showMessage, showError, resetError } from '../redux/actions';
 
 function Dashboard() {
     const [refresh, setRefresh] = useState(false);
-    const [details, setDetails] = useState(null);
 
     const dispatch = useDispatch();
 
+    const details = useSelector(state => state.details);
     const user = useSelector(state => state.user);
     const loading = useSelector(state => state.loading);
     const error = useSelector(state => state.error);
@@ -38,12 +38,7 @@ function Dashboard() {
     };
 
     const getDetails = (title, type) => {
-        if (type == 'TV Show') {
-            type = 'series'
-        };
-        axios.get(`${url}/Titles/Details?title=${title}&type=${type}`)
-        .then(res => setDetails(res.data))
-        .catch(err => dispatch(showError(err)));
+        dispatch(fetchDetails(title, type));
         setRefresh(!refresh);
     };
 
@@ -92,7 +87,7 @@ function Dashboard() {
                     details={details}
                     setRefresh={()=> setRefresh(!refresh)} 
                     getDetails={(title, type) => getDetails(title, type)}
-                    setDetails={() => setDetails(null)}
+                    clearDetails={() => clearError()}
                 />
             </div>
         </div>

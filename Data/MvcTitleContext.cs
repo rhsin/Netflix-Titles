@@ -14,6 +14,9 @@ namespace MvcTitle.Data
         {
             modelBuilder.Entity<TitleUser>()
                 .HasKey(tu => new { tu.TitleId, tu.UserId });
+
+            modelBuilder.Entity<User>()
+                .Property(u => u.Role).HasDefaultValue("Guest");
         }
 
         public DbSet<Title> Title { get; set; }

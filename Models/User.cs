@@ -14,6 +14,8 @@ namespace MvcTitle.Models
         [Required, EmailAddress]
         public string Email { get; set; }
 
+        public string Role { get; set; }
+
         public IList<TitleUser> TitleUsers { get; set; }
     }
 }

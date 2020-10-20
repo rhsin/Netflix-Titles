@@ -73,7 +73,8 @@ namespace MvcTitle.Controllers
         // PUT: api/Titles/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPut("{id}"), Authorize]
+        [Authorize(Roles = "Admin")]
+        [HttpPut("{id}")]
         public async Task<IActionResult> PutTitle(int id, Title title)
         {
             if (id != title.Id)
@@ -105,7 +106,8 @@ namespace MvcTitle.Controllers
         // POST: api/Titles
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPost, Authorize]
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
         public async Task<ActionResult<Title>> PostTitle(Title title)
         {
             _context.Title.Add(title);
@@ -115,7 +117,8 @@ namespace MvcTitle.Controllers
         }
 
         // DELETE: api/Titles/5
-        [HttpDelete("{id}"), Authorize]
+        [Authorize(Roles = "Admin")]
+        [HttpDelete("{id}")]
         public async Task<ActionResult<Title>> DeleteTitle(int id)
         {
             var title = await _context.Title.FindAsync(id);
