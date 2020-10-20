@@ -13,6 +13,7 @@ function Titles(props) {
     const dispatch = useDispatch();
 
     const titles = useSelector(state => state.titles);
+    const user = useSelector(state => state.user);
     const url = useSelector(state => state.url);
 
     const sortOrder = (e, order) => {
@@ -26,7 +27,7 @@ function Titles(props) {
     };
 
     const addTitle = (id) => {
-        axios.post(`${url}/Users/AddTitle/${id}/2`)
+        axios.post(`${url}/Users/AddTitle/${id}/${user.id}`)
         .then(res => dispatch(showMessage(res.data)))
         .catch(err => dispatch(showError(err)));
         setRefresh();

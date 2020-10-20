@@ -31,7 +31,7 @@ function Dashboard() {
     };
 
     const removeTitle = (id) => {
-        axios.post(`${url}/Users/RemoveTitle/${id}/1`)
+        axios.post(`${url}/Users/RemoveTitle/${id}/${user.id}`)
         .then(res => dispatch(showMessage(res.data)))
         .catch(err => dispatch(showError(err)));
         setRefresh(!refresh);

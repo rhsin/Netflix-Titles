@@ -1,23 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using MvcTitle.Data;
+using MvcTitle.Models;
 
 namespace MvcTitle.Controllers
 {
     [Route("api/[controller]")]
     public class TokensController : ControllerBase
     {
-        private IConfiguration _config;
+        private readonly IConfiguration _config;
+        private readonly MvcTitleContext _context;
 
-        public TokensController(IConfiguration config)
+        public TokensController(IConfiguration config, MvcTitleContext context)
         {
             _config = config;
+            _context = context;
         }
 
         [AllowAnonymous]
@@ -36,7 +41,7 @@ namespace MvcTitle.Controllers
             return response;
         }
 
-        private string BuildToken(UserModel user)
+        private string BuildToken(User user)
         {
             var claims = new List<Claim>
             {
@@ -60,44 +65,24 @@ namespace MvcTitle.Controllers
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        private UserModel Authenticate(LoginModel login)
+        private User Authenticate(LoginModel login)
         {
-            UserModel user = null;
+            User user = _context.User
+                .Where(u => u.Email == login.Username)
+                .SingleOrDefault();
 
-            if (login.Username == "ryan" && login.Password == "test")
+            if (login.Password == "test")
             {
-                user = new UserModel
-                {
-                    Name = "Ryan",
-                    Email = "ryan@test.com",
-                    Role = "Admin"
-                };
+                return user;
             }
 
-            if (login.Username == "bob" && login.Password == "test")
-            {
-                user = new UserModel
-                {
-                    Name = "Bob",
-                    Email = "bob@test.com",
-                    Role = "Guest"
-                };
-            }
-
-            return user;
+            return null;
         }
 
         public class LoginModel
         {
             public string Username { get; set; }
             public string Password { get; set; }
-        }
-
-        private class UserModel
-        {
-            public string Name { get; set; }
-            public string Email { get; set; }
-            public string Role { get; set; }
         }
     }
 }
