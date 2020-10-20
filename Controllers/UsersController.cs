@@ -59,7 +59,6 @@ namespace MvcTitle.Controllers
         }
 
         // POST: api/Users/AddTitle/1/1
-        [Authorize(Roles = "Admin")]
         [HttpPost("AddTitle/{titleId}/{userId}")]
         public async Task<IActionResult> AddTitle(int titleId, int userId)
         {
@@ -74,7 +73,6 @@ namespace MvcTitle.Controllers
         }
 
         // POST: api/Users/RemoveTitle/1/1
-        [Authorize(Roles = "Admin")]
         [HttpPost("RemoveTitle/{titleId}/{userId}")]
         public async Task<IActionResult> RemoveTitle(int titleId, int userId)
         {

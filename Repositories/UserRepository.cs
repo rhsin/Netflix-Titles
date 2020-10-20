@@ -14,7 +14,7 @@ namespace MvcTitle.Repositories
     {
         public IQueryable<User> GetUsers();
 
-        public string GetCurrentId();
+        public int GetCurrentId();
 
         public string GetCurrentRole();
 
@@ -41,10 +41,10 @@ namespace MvcTitle.Repositories
                 .ThenInclude(tu => tu.Title);
         }
 
-        public string GetCurrentId()
+        public int GetCurrentId()
         {
-            return _httpContextAccessor.HttpContext.User
-                .FindFirstValue(ClaimTypes.UserData);
+            return int.Parse(_httpContextAccessor.HttpContext.User
+                .FindFirstValue(ClaimTypes.UserData));
         }
 
         public string GetCurrentRole()
@@ -55,6 +55,11 @@ namespace MvcTitle.Repositories
 
         public async Task<string> AddTitle(int titleId, int userId)
         {
+            if (userId != this.GetCurrentId())
+            {
+                return "Not Authorized To Add Title!";
+            }
+
             var titleUser = new TitleUser
             {
                 TitleId = titleId,
@@ -77,6 +82,11 @@ namespace MvcTitle.Repositories
 
         public async Task<string> RemoveTitle(int titleId, int userId)
         {
+            if (userId != this.GetCurrentId())
+            {
+                return "Not Authorized To Remove Title!";
+            }
+
             try
             {
                 var titleUser = await _context.TitleUser

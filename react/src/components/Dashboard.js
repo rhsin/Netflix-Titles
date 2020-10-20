@@ -28,6 +28,7 @@ function Dashboard() {
 
     const clearError = () => {
         dispatch(resetError());
+        setRefresh(!refresh);
     };
 
     const removeTitle = (id) => {
