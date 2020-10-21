@@ -8,6 +8,7 @@ function Titles(props) {
 
     const [search, setSearch] = useState('');
     const [cast, setCast] = useState('');
+    const [desc, setDesc] = useState('');
     const [order, setOrder] = useState('');
 
     const dispatch = useDispatch();
@@ -23,7 +24,7 @@ function Titles(props) {
 
     const searchTitles = (e) => {
         e.preventDefault();
-        dispatch(fetchSearchTitles(search, cast, order));
+        dispatch(fetchSearchTitles(search, cast, desc, order));
     };
 
     const addTitle = (id) => {
@@ -64,6 +65,8 @@ function Titles(props) {
                 <input type='text' id='search' onChange={e => setSearch(e.target.value)} />
                 <label htmlFor='cast'>Cast</label>
                 <input type='text' id='cast' onChange={e => setCast(e.target.value)} />
+                <label htmlFor='desc'>Description</label>
+                <input type='text' id='desc' onChange={e => setDesc(e.target.value)} />
                 <button className='btn blue' onClick={e => sortOrder(e, 'date_desc')}>
                     Order Desc.
                 </button>

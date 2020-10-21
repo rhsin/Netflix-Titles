@@ -26,6 +26,12 @@ test('renders search cast input', () => {
     expect(inputElement).toBeInTheDocument();
 });
 
+test('renders search description input', () => {
+    const { getByText } = render(<App />);
+    const inputElement = getByText(/Description/);
+    expect(inputElement).toBeInTheDocument();
+});
+
 test('renders search filter button', () => {
     const { getByText } = render(<App />);
     const buttonElement = getByText(/Filter/);

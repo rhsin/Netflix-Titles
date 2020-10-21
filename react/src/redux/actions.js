@@ -59,8 +59,8 @@ export const fetchAllTitles = () => (
     fetchTitles(`${url}/Titles`)
 );
 
-export const fetchSearchTitles = (name, cast, order) => (
-    fetchTitles(`${url}/Titles/Filter?name=${name}&cast=${cast}&order=${order}`)
+export const fetchSearchTitles = (name, cast, desc, order) => (
+    fetchTitles(`${url}/Titles/Filter?name=${name}&cast=${cast}&desc=${desc}&order=${order}`)
 );
 
 export const showMessage = (message) => ({type: SHOW_ERROR, error: message});
