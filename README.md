@@ -2,7 +2,7 @@
 <table>
 <tr>
 <td>
-  A web app for a custom netflix search dashboard which allows users to browse & find Netflix titles and save them to their account. The titles are imported from a CSV data-set with 6000+ movies/shows, and further details for each title are accessed through OMDB API. This app is a learning project to explore the .NET Core framework, using their MVC approach and adapting it into an SPA with React & Redux. API endpoints are secured through JSON Web Tokens using NuGet bearer-token libraries. 
+  A web app for a custom Netflix search dashboard which allows users to browse & find Netflix titles and save them to their account. The titles are imported from a CSV data-set with 6000+ movies/shows, and further details for each title are accessed through OMDB API. This app is a learning project to explore the .NET Core framework, using their MVC approach and adapting it into an SPA with React & Redux. API endpoints are secured through JSON Web Tokens using NuGet bearer-token libraries. 
 </td>
 </tr>
 </table>
